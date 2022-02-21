@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import {Header} from './components/Header';
 
 const Title = styled.h1`
   color: red;
@@ -6,8 +7,6 @@ const Title = styled.h1`
 
 export function App() {
   return (
-    <div className="App">
-      <h1>Hello world!</h1>
-    </div>
+    <Header />
   );
 }
