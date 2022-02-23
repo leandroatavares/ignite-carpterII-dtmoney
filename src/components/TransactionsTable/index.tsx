@@ -1,6 +1,7 @@
 import { Model } from "miragejs";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { api } from '../../services/api';
+import { TransactionsContext } from "../../TransactionsContext";
 import { Container } from "./styles";
 
 type Transactions = {
@@ -13,6 +14,8 @@ type Transactions = {
 }
 
 export function TransactionsTable() {
+  const data = useContext(TransactionsContext);
+
   const [transactions, setTransactions] = useState<Transactions[]>([]);
 
   useEffect(() => {
