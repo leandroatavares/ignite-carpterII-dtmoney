@@ -15,7 +15,7 @@ type TransactionsProviderProps = {
 }
 interface TransactionsContextShareData {
   transactions: Transaction[];
-  createTransaction: (transactions: TransactionInput) => void;
+  createTransaction: (transactions: TransactionInput) => Promise<void>;
 }
 export const TransactionsContext = createContext<TransactionsContextShareData>(
     {} as TransactionsContextShareData //force
@@ -29,8 +29,14 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
       .then(response => setTransactions(response.data.transactions))
   }, []);
 
-  function createTransaction(transaction: TransactionInput) {
-    api.post('/transactions', transaction)
+  async function createTransaction(transactionInput: TransactionInput) {
+    const response = await api.post('/transactions', {
+      ...transactionInput,
+      createdAt: new Date()}
+    )
+    const { transaction } = response.data;
+
+    setTransactions([...transactions, transaction])
   }
 
   return (
